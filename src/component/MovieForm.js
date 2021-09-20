@@ -3,7 +3,7 @@ import React, {useState} from "react";
 const MovieForm = (prop) => {
   const [movie, setMovie] = useState("");
   const [rating, setRating] = useState("");
-  const [duration , setDuration] = useState("");
+  const [duration, setDuration] = useState("");
   const [movies, setMovies] = useState([]);
 
   function movieName (e) {
@@ -19,23 +19,30 @@ const MovieForm = (prop) => {
   }
 
   function Sumbit () {
-    prop.setMovie(movies.concat({movie, rating, duration}));
+    prop.setMovie(prop.movieList.concat({movie, rating, duration}));
+    console.log(prop.movieList);
+    setMovie("");
+    setRating("");
+    setDuration("");
   }
 
   return(
     <div>
-        <p>input movie name</p>
+        <p>movie name</p>
         <input 
+        value={movie}
         className="movie-Name"
         onChange={movieName}
         />
-        <p>input movie rating</p>
+        <p>movie rating</p>
         <input 
+        value={rating}
         className="movie-rating"
         onChange={movieRating}
         />
-        <p>input movie duration</p>
+        <p>movie duration</p>
         <input 
+        value={duration}
         className="movie-duration"
         onChange={movieDuration}
         />
