@@ -8,11 +8,11 @@ export default function App() {
   const [movieList, setMovieList] = useState([]);
 
   return (
-    <div>
+    <div className="container">
       <div className="input-fields">
         <MovieForm movieList={movieList} setMovie={setMovieList} />
-        <div>
-          <Search />
+        <div className="output-fields">
+          <Search movie={movieList} />
           <MovieList movieList={movieList} />
         </div>
       </div>

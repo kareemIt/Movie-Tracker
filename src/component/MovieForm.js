@@ -4,49 +4,60 @@ const MovieForm = (prop) => {
   const [movie, setMovie] = useState("");
   const [rating, setRating] = useState("");
   const [duration, setDuration] = useState("");
-  const [movies, setMovies] = useState([]);
 
   function movieName (e) {
     setMovie(e.target.value);
   }
 
   function movieRating (e) {
+    if (isNaN(e.target.value)) return;
     setRating(e.target.value);
   }
 
   function movieDuration (e) {
-    setDuration(e.target.value);
+    const duration = e.target.value.substring(e.target.value.length);
+    const hours = 0;
+
+    if (duration.substring(duration.length-1) == "m") {
+        hours = duration/60;
+    }
+    if (duration.substring(duration.length-1) == "h") {
+       hours = duration;
+    }
+    
+    setDuration(hours);
   }
 
   function Sumbit () {
     prop.setMovie(prop.movieList.concat({movie, rating, duration}));
-    console.log(prop.movieList);
     setMovie("");
     setRating("");
     setDuration("");
   }
 
   return(
-    <div>
-        <p>movie name</p>
+    <div className="inner-input-container">
+      <div className="inner-input">
+        <p>Movie name</p>
         <input 
         value={movie}
         className="movie-Name"
         onChange={movieName}
         />
-        <p>movie rating</p>
+        <p>Movie rating</p>
         <input 
         value={rating}
         className="movie-rating"
         onChange={movieRating}
         />
-        <p>movie duration</p>
+        <p>Movie duration</p>
         <input 
         value={duration}
         className="movie-duration"
         onChange={movieDuration}
         />
         <button onClick={Sumbit}>Sumbit</button>
+        </div>
     </div>  
   );
 };

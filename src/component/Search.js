@@ -1,9 +1,19 @@
 import React, {useState} from "react";
 
-const Search = () => {
+const Search = (prop) => {
+  const [search, setSearch] = useState("");
+
+  function searchInput(e) {
+    setSearch(e.target.value);
+  }
+  function searchFeature() {
+    prop.movie()
+  }
+
   return(
     <div>
-        <input/>
+      <p>Search</p>
+        <input onChange={searchInput}/>
     </div>  
   );
 };
