@@ -1,18 +1,18 @@
-import React, {useState} from "react";
+import React, { useState } from 'react';
 
 const MovieList = (prop) => {
-  return(
+  return (
     <div className="movie-list">
       {prop.movieList.map((movie, index) => {
-        return(
+        return (
           <div className="individual-movie" key={index}>
             <p>{movie.movie}</p>
             <p>{movie.rating}/100</p>
-            <p>{movie.duration}.Hrs</p>
+            <p>{movie.duration} hrs</p>
           </div>
         );
       })}
-    </div>  
+    </div>
   );
 };
 export default MovieList;

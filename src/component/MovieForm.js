@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const MovieForm = (prop) => {
   const [movie, setMovie] = useState('');
@@ -14,28 +14,45 @@ const MovieForm = (prop) => {
   }
 
   function movieDuration(e) {
-    const duration = e.target.value.substring(e.target.value.length);
-    const hours = 0;
-    //ask derick
-    if (duration.substring(duration.length - 1) == 'm') {
-      hours = duration / 60;
-    }
-    if (duration.substring(duration.length - 1) == 'h') {
-      hours = duration;
-    }
-
-    setDuration(hours);
+    setDuration(e.target.value);
   }
 
-  function Sumbit() {
-    if (rating > 100) {
-      //ask derick
+  useEffect(() => {
+    if (Number(rating) > 100) {
       setRating(100);
     }
-    if (rating < 0) {
+    if (Number(rating) < 0) {
       setRating(0);
     }
-    prop.setMovie(prop.movieList.concat({ movie, rating, duration }));
+  }, [rating]);
+
+  function Sumbit() {
+    let hours = 0;
+    const durationLength = Number(duration.substring(0, duration.length - 1));
+    const durationType = duration.substring(duration.length - 1);
+
+    if (durationType == 'm') {
+      hours = durationLength / 60;
+      setDuration(hours);
+    }
+
+    if (durationType == 'h') {
+      hours = durationLength;
+      setDuration(hours);
+    }
+
+    const newDuration =
+      duration.indexOf('m') == -1
+        ? durationLength
+        : (durationLength / 60).toFixed(2);
+
+    prop.setMovie(
+      prop.movieList.concat({
+        movie,
+        rating,
+        duration: newDuration,
+      })
+    );
     setMovie('');
     setRating('');
     setDuration('');
@@ -61,6 +78,7 @@ const MovieForm = (prop) => {
           className="movie-duration"
           onChange={movieDuration}
         />
+        {}
         <button onClick={Sumbit}>Sumbit</button>
       </div>
     </div>
