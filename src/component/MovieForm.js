@@ -27,6 +27,7 @@ const MovieForm = (prop) => {
   }, [rating]);
 
   function Sumbit() {
+    if (rating == '' || duration == '' || movie == '') return;
     let hours = 0;
     const durationLength = Number(duration.substring(0, duration.length - 1));
     const durationType = duration.substring(duration.length - 1);
