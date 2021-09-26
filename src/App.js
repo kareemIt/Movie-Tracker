@@ -5,15 +5,26 @@ import Search from './component/Search';
 import './style.css';
 
 export default function App() {
-  const [movieList, setMovieList] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [input, setInput] = useState('');
+  const searchValue = (e) => {
+    setInput(e.target.value);
+  };
 
+  function filter() {
+    movies.movie(
+      input.filter((input, index) => input.indexOf(movies.movie))
+    );
+  }
+
+  console.log(input);
   return (
     <div className="container">
       <div className="input-fields">
-        <MovieForm movieList={movieList} setMovie={setMovieList} />
+        <MovieForm movies={movies} setMovie={setMovies} />
         <div className="output-fields">
-          <Search movie={movieList} />
-          <MovieList movieList={movieList} />
+          <Search onChange={searchValue} />
+          <MovieList movies={movies} />
         </div>
       </div>
     </div>

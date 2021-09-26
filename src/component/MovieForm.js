@@ -48,7 +48,7 @@ const MovieForm = (prop) => {
         : (durationLength / 60).toFixed(2);
 
     prop.setMovie(
-      prop.movieList.concat({
+      prop.movies.concat({
         movie,
         rating,
         duration: newDuration,

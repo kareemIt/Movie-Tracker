@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 
-const Search = (prop) => {
-  const [search, setSearch] = useState('');
-
-  function searchInput(e) {
-    setSearch(e.target.value);
-  }
-
+const Search = (props) => {
+  
   return (
     <div>
       <p>Search</p>
-      <input onChange={searchInput} />
+      <input onChange={props.onChange} />
     </div>
   );
 };
