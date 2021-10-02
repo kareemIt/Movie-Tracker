@@ -73,7 +73,7 @@ const MovieForm = (prop) => {
           className="movie-rating"
           onChange={movieRating}
         />
-        <p>Movie duration</p>
+        <p>Movie duration m/h</p>
         <input
           value={duration}
           className="movie-duration"
