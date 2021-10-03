@@ -1,69 +1,57 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const MovieForm = (prop) => {
-  const [movie, setMovie] = useState('');
+const MovieForm = ({ addMovie }) => {
+  const [title, setTitle] = useState('');
   const [rating, setRating] = useState('');
   const [duration, setDuration] = useState('');
 
-  function movieName(e) {
-    setMovie(e.target.value);
+  function handleTitleChange(e) {
+    setTitle(e.target.value);
   }
 
-  function movieRating(e) {
-    setRating(e.target.value);
+  function handleRatingChange(e) {
+    const num = Math.max(0, Math.min(Number(e.target.value), 100));
+    setRating(num);
   }
 
-  function movieDuration(e) {
+  function handleDurationChange(e) {
     setDuration(e.target.value);
   }
 
-  useEffect(() => {
-    if (Number(rating) > 100) {
-      setRating(100);
-    }
-    if (Number(rating) < 0) {
-      setRating(0);
-    }
-  }, [rating]);
+  function getHoursFromText(text) {
+    const duration = Number(text.slice(0, -1));
+    const type = text[text.length - 1];
+    if (type == 'h') return duration;
+    if (type == 'm') return duration / 60;
 
-  function Sumbit() {
-    if (rating == '' || duration == '' || movie == '') return;
-    let hours = 0;
-    const durationLength = Number(duration.substring(0, duration.length - 1));
-    const durationType = duration.substring(duration.length - 1);
+    throw new Error('invalid type');
+  }
 
-    if (durationType == 'm') {
-      hours = durationLength / 60;
-      setDuration(hours);
-    }
+  function submit(e) {
+    e.preventDefault();
 
-    if (durationType == 'h') {
-      hours = durationLength;
-      setDuration(hours);
-    }
+    if (rating == '' || duration == '' || title == '') return;
+    const hours = getHoursFromText(duration);
 
-    const newDuration =
-      duration.indexOf('m') == -1
-        ? durationLength
-        : (durationLength / 60).toFixed(2);
-
-    prop.setMovie(
-      prop.movies.concat({
-        movie,
-        rating,
-        duration: newDuration,
-      })
-    );
-    setMovie('');
+    addMovie({
+      title,
+      rating,
+      duration: hours.toFixed(2),
+    });
+    setTitle('');
     setRating('');
     setDuration('');
   }
 
   return (
     <div className="inner-input-container">
-      <div className="inner-input">
+      <form onSubmit={submit} className="inner-input">
         <p>Movie name</p>
-        <input value={movie} className="movie-Name" onChange={movieName} />
+        <input
+          value={title}
+          className="movie-name"
+          onChange={handleTitleChange}
+        />
         <p>Movie rating</p>
         <input
           value={rating}
@@ -71,17 +59,16 @@ const MovieForm = (prop) => {
           min="0"
           max="100"
           className="movie-rating"
-          onChange={movieRating}
+          onChange={handleRatingChange}
         />
         <p>Movie duration m/h</p>
         <input
           value={duration}
           className="movie-duration"
-          onChange={movieDuration}
+          onChange={handleDurationChange}
         />
-        {}
-        <button onClick={Sumbit}>Sumbit</button>
-      </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 };

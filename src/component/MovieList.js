@@ -6,7 +6,7 @@ const MovieList = (prop) => {
       {prop.movies.map((movie, index) => {
         return (
           <div className="individual-movie" key={index}>
-            <p>{movie.movie}</p>
+            <p>{movie.title}</p>
             <p>{movie.rating}/100</p>
             <p>{movie.duration} hrs</p>
           </div>

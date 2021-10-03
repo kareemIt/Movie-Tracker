@@ -11,7 +11,7 @@ export default function App() {
 
   useEffect(() => {
     const newMovies = movies.filter((movieData) =>
-      movieData.movie.includes(input)
+      movieData.title.includes(input)
     );
     setFilteredMovies(newMovies);
   }, [input, movies]);
@@ -20,10 +20,14 @@ export default function App() {
     setInput(e.target.value);
   };
 
+  const addMovie = (movie) => {
+    setMovies((oldMovies) => [...oldMovies, movie]);
+  };
+
   return (
     <div className="container">
       <div className="input-fields">
-        <MovieForm movies={movies} setMovie={setMovies} />
+        <MovieForm addMovie={addMovie} />
         <div className="output-fields">
           <Search onChange={searchValue} />
           <MovieList movies={filteredMovies} />
